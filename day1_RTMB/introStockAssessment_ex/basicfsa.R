@@ -12,12 +12,15 @@ par <- list(
   logSdSurvey=0
 )
 
-nll<-function(par){
+f<-function(par){
   getAll(par, dat)
+  
+  nll = 0
 
   na <- max(age)-min(age)+1
   ny <- max(year)-min(year)+1
 
+  
   ## setup F
   F <- outer(exp(logFA),exp(logFY))
 
@@ -29,7 +32,7 @@ nll<-function(par){
     for(a in 2:na){
       logN[a,y] <- logN[a-1,y-1]-F[a-1,y-1]-M[a-1,y-1]
     }
-  } 
+  }
 
   # Match to observations
   logObs <- log(obs)
@@ -44,20 +47,26 @@ nll<-function(par){
     }else{
       logPred[i] <- logQ[a]-(F[a,y]+M[a,y])*surveyTime+logN[a,y]
       sdvec[i] <- exp(logSdSurvey)
-    }    
+    }
   }
-  
-  ans <- -sum(dnorm(logObs,logPred,sdvec,TRUE))
+
+  nll <- -sum(dnorm(logObs,logPred,sdvec,TRUE))
 
   logssb <- log(apply(exp(logN)*stockMeanWeight*propMature,2,sum))
   ADREPORT(logssb)
-  return(ans)
+  return(nll)
 }
 
-obj <- MakeADFun(nll, par, map=list(logFA=factor(c(1:4,NA,NA,NA))))
+#Set up AD-machinery
+obj <- MakeADFun(f, par, map=list(logFA=factor(c(1:4,NA,NA,NA))))
 
+#Estimate model
 opt <- nlminb(obj$par, obj$fn, obj$gr, control=list(iter.max=1000,eval.max=1000,trace = 1))
+
+#Extract adreported variables
 sdrep <- sdreport(obj)
+
+
 pl <- as.list(sdrep, "Est", report=TRUE)
 plsd <- as.list(sdrep, "Std", report=TRUE)
 
