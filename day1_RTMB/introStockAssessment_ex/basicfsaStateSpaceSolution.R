@@ -15,7 +15,8 @@ par <- list(
 
 f<-function(par){
   getAll(par, dat)
-  sdN = exp(logSdN)
+  sdR = exp(logSdN[1])
+  sdS = exp(logSdN[2])
   sdF = exp(logSdF)
   
   nll = 0
@@ -33,9 +34,9 @@ f<-function(par){
 
   ## setup N
   for(y in 2:ny){
-    nll = nll - dnorm(logN[1,y],logN[1,y-1] , sdN[1], TRUE) #Random walk for recruitment
+    nll = nll - dnorm(logN[1,y],logN[1,y-1] , sdR, TRUE) #Random walk for recruitment
     for(a in 2:na){
-      nll = nll- dnorm(logN[a,y],logN[a-1,y-1]-F[a-1,y-1]-M[a-1,y-1], sdN[2],TRUE) #Survival process
+      nll = nll- dnorm(logN[a,y],logN[a-1,y-1]-F[a-1,y-1]-M[a-1,y-1], sdS,TRUE) #Survival process
     }
   }
 

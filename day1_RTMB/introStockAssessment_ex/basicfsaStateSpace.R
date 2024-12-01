@@ -15,7 +15,8 @@ par <- list(
 
 f<-function(par){
   getAll(par, dat)
-  sdN = exp(logSdN)
+  sdR = exp(logSdN[1])
+  sdS = exp(logSdN[2])
   sdF = exp(logSdF)
   
   nll = 0
