@@ -1,16 +1,12 @@
 library(RTMB)
 y = readRDS("randomEffecs_ex/latentAR1Process.Rds")
 
-
-
-
 #Set up and estimate model
 data = list(y = y)
 par = list(logsd = c(0,0),
            logitRho = 0,
            beta0 = 3,
            gamma = rep(0,length(y)))
-
 
 f<-function(par){
   getAll(data,par)
@@ -28,7 +24,6 @@ f<-function(par){
 
   logmu = beta0 + gamma
   nll = nll - sum(dnorm(y-exp(logmu), sd = sd_y,log = TRUE))
-  ADREPORT(rho)
   ADREPORT(logmu)
   nll
 }

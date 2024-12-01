@@ -1,4 +1,3 @@
-
 library(RTMB)
 y = readRDS("randomEffecs_ex/latentAR1Process.Rds")
 
@@ -24,12 +23,13 @@ f<-function(par){
   }
 
   logmu = beta0 + gamma
-  
   nll = nll - sum(dnorm(y-exp(logmu), sd = sd_y,log = TRUE))
-  
-  ADREPORT(rho)
   ADREPORT(logmu)
-  
   nll
 }
+
+obj = ...
+opt = ...
+
+#Plot prediction versus y 
 
