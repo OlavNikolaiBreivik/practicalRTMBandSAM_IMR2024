@@ -54,9 +54,9 @@ nll<-function(par){
   return(ans)
 }
 
-obj <- MakeADFun(nll, par, map=list(logFA=factor(c(1:4,NA,NA,NA))), silent=TRUE)
+obj <- MakeADFun(nll, par, map=list(logFA=factor(c(1:4,NA,NA,NA))))
 
-opt <- nlminb(obj$par, obj$fn, obj$gr, control=list(iter.max=1000,eval.max=1000))
+opt <- nlminb(obj$par, obj$fn, obj$gr, control=list(iter.max=1000,eval.max=1000,trace = 1))
 sdrep <- sdreport(obj)
 pl <- as.list(sdrep, "Est", report=TRUE)
 plsd <- as.list(sdrep, "Std", report=TRUE)
