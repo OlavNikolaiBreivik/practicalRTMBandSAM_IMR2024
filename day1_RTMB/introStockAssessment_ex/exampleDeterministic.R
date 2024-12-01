@@ -28,5 +28,3 @@ round(N)
 round(C)
 
 
-#Percentage that dies from fishery in this scenario
-(1-exp(-F-M)) - (1-exp(-M))
