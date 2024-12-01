@@ -6,8 +6,8 @@ dat$keyFsta =  c(1,2,3,4,5,5,5) #Coupling of fishing mortality
 par <- list(
   logN = dat$M*0,
   logF = dat$M[1:max(dat$keyFsta),],
-  sdF = 0,
-  sdN = c(0,0),
+  logSdF = 0,
+  logSdN = c(0,0),
   logSdCatch=0,
   logQ=rep(0,length(unique(dat$age[dat$fleet==2]))),
   logSdSurvey=0
@@ -15,13 +15,16 @@ par <- list(
 
 f<-function(par){
   getAll(par, dat)
+  sdN = exp(logSdN)
+  sdF = exp(logSdF)
+  
   nll = 0
 
   na <- max(age)-min(age)+1
   ny <- max(year)-min(year)+1
 
   #Fishing mortality
-  SigmaF = diag(dim(logF)[1]) * exp(sdF)^2
+  SigmaF = diag(dim(logF)[1]) * sdF^2
   for(i in 2:dim(logF)[2]){
     nll = nll- dmvnorm(logF[,i], ...) #Random walk for logF
   }
