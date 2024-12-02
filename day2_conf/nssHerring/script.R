@@ -1,4 +1,5 @@
 library(stockassessment)
+source("../utils/residualsTests.R")# Source script shared by Casper Berg for detecting significant structures in residuals
 
 cn<-read.ices("nssherring/cn.dat")
 cw<-read.ices("nssherring/cw.dat")
@@ -32,23 +33,16 @@ saveConf(confDef,file = "nssherring/conf.cfg")
 
 
 #Usefull commands
-AIC(fit)
-res = residuals(fit)
-residDiagPlot(fit,resid = res)
-jj = jit(fit)
-sim = simstudy(fit)
-ret = retro(fit,year = 5)
+AIC(fit) #Calcualte AIC
+res = residuals(fit) #Caclulate osa-residuals
+residDiagPlot(fit,resid = res) #Tests for patterns in residuals
+jj = jit(fit) #Jitter analyuss
+sim = simstudy(fit) #Simstudy
+ret = retro(fit,year = 5) #Retrospective analysis
 yearMat =  matrix(c(2023, 2024, 2024,2024, 
                     2022, 2023, 2023,2023, 
                     2021, 2022, 2022,2022,
                     2020, 2021, 2021,2021,
                     2019, 2020, 2020,2020), 
-              nrow = 5, ncol = 4, byrow = TRUE)
-retManual = retro(fit,year = yearMat)
-ret
-retManual
-qchisq(0.999,df = 1)
-# Print the matrix
-print(R)
-  
-retro(fit)
+              nrow = 5, ncol = 4, byrow = TRUE) #year to remove in retor analysis
+retManual = retro(fit,year = yearMat) #Retrospective analysis, manually provide years to remove from each fleet
