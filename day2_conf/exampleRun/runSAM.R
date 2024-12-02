@@ -37,3 +37,20 @@ recplot(fit)
 fselectivityplot(fit)
 
 
+
+##### include outlier ####
+year = 1970
+fleet = 1
+age = 7
+
+aux = as.data.frame(fit$data$aux)
+
+dataOutlier = fit$data
+obsToModify = which(aux$year==year& aux$fleet==fleet& aux$age == age)
+dataOutlier$logobs[obsToModify] = dataOutlier$logobs[obsToModify] +10 
+conf = loadConf(dat,file= "exampleRun/conf.cfg")
+par = defpar(dataOutlier,conf)
+fitOutlier = sam.fit(dataOutlier,conf, par)
+
+ssbplot(c(fitOfficial = fit,fitOutlier = fitOutlier),addCI = TRUE)
+ 
