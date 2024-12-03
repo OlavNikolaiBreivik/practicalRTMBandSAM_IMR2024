@@ -29,7 +29,26 @@ confDef<-defcon(dat)
 par = defpar(dat,confDef)
 fit = sam.fit(dat,confDef,par)
 
-saveConf(confDef,file = "nssherring/conf.cfg")
+partable(fit)
+
+saveConf(confDef,file = "nssherring/conf.cfg",overwrite = TRUE)
+
+
+#######
+conf01 = loadConf(dat,file = "nssherring/conf01Fsta.cfg")
+par01 = defpar(dat,conf01)
+fit01 = sam.fit(dat,conf01,par01)
+
+res01 = residuals(fit01)
+residDiagPlot(fit01,resid = res01) #Tests for patterns in residuals
+
+#######
+confTmp = loadConf(dat,file = "nssherring/confTmp.cfg")
+parTmp = defpar(dat,confTmp)
+fitTmp = sam.fit(dat,confTmp,parTmp)
+
+#saveRDS(fit,file = "fitEdda.Rda")
+
 
 
 #Usefull commands
