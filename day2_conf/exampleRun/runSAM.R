@@ -38,19 +38,29 @@ fselectivityplot(fit)
 
 
 
-##### include outlier ####
+
+
+
+
+
+
+#########
+#The rest is for an exercise during the presentation of advanced configurations.
+#########
+
+##### include outlier in given year, fleet and age####
 year = 1970
 fleet = 1
 age = 7
 
-aux = as.data.frame(fit$data$aux)
+aux = as.data.frame(fit$data$aux) #data frame with years etc. ordered in same way as observations
 
 dataOutlier = fit$data
 obsToModify = which(aux$year==year& aux$fleet==fleet& aux$age == age)
-dataOutlier$logobs[obsToModify] = dataOutlier$logobs[obsToModify] +10 
+dataOutlier$logobs[obsToModify] = dataOutlier$logobs[obsToModify] +10  #Include an outlier in given year, age and fleet
 conf = loadConf(dat,file= "exampleRun/conf.cfg")
 par = defpar(dataOutlier,conf)
 fitOutlier = sam.fit(dataOutlier,conf, par)
 
 ssbplot(c(fitOfficial = fit,fitOutlier = fitOutlier),addCI = TRUE)
- 
+  
