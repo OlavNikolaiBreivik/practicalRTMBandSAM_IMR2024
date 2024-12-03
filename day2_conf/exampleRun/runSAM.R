@@ -31,10 +31,10 @@ fit = sam.fit(dat,conf,par)
 
 
 plot(fit)
-ssbplot(fit)
-fbarplot(fit)
-recplot(fit)
-fselectivityplot(fit)
+
+
+
+
 
 
 
