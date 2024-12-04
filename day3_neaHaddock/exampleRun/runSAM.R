@@ -46,4 +46,9 @@ fitOutlier = sam.fit(dataOutlier,conf, par)
 
 ssbplot(c(fitOfficial = fit,fitOutlier = fitOutlier),addCI = TRUE)
   
+confRobust = conf
+confRobust$fracMixObs[1] = 0.01
+fitOutlierRobust = sam.fit(dataOutlier,confRobust, par)
+
+ssbplot(c(fitOfficial = fit,fitOutlier = fitOutlier,fitRobust = fitOutlierRobust),addCI = TRUE)
 
