@@ -1,0 +1,8 @@
+The Norwegian Spring Spawning herring assessment model:
+
+The data consist of one catch fleet and three survey fleets. A plus group is assumed for the catch and two of the surveys. One survey is only for recruitment.
+
+
+The SAM model is constructed with the following configurations:
+
+
